@@ -1,17 +1,21 @@
 #!/bin/bash
-check=""
+all=""
 exclude=""
-while getopts ":he:c" opt; do
+while getopts ":he:a" opt; do
     case $opt in
         h)
-            printf 'A tool to see all music files artists in a directory\n-h    print this\n-e [FORMAT,FORMAT...]    exclude a file format\n-c   check: paste not tagged files, too'
+            echo "A small CLI interface for Bash to see the tag of all the files in a directory, in particular the artist tag in mp3 files."
+            echo "Usage: ctag [OPTIONS] DIRECTORY"
+            echo "  -h                      Print this"
+            echo "  -e [FORMAT,FORMAT...]   Exclude file formats"
+            echo "  -a                      All: paste untagged files, too"
             exit 0
             ;;
         e)
             IFS=',' read -ra exclude <<< "$OPTARG"
             ;;
-        c)
-            check="v"
+        a)
+            all="v"
             ;;
         \?)
             echo 'Option not found'
@@ -27,7 +31,7 @@ for file in "${!#}"/*; do
         name=$(basename "$file")
         if [ "${#exclude[@]}" -eq 0 ] || ! printf '%s\n' "${exclude[@]}" | grep -Fxq "${name##*.}"; then
             artist=$(eyeD3 "$file" | grep artist)
-            if [ -n "$artist" ] || [ -n "$check" ]; then
+            if [ -n "$artist" ] || [ -n "$all" ]; then
                 ((n+=1))
                 names[n]="$name"
                 artists[n]=$(echo "$artist" | head -n 1 | cut -d ':' -f2- | sed 's/^[[:space:]]*//')
