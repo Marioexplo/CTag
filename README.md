@@ -4,15 +4,17 @@ A small CLI interface for Bash to see the tag of all the files in a directory, i
 This is a project I made for me in my very spared time. I think I'll try to add other features as I get better at writing Shell but it probably will never get much bigger than it already is.
 
 ## Install
-Fist of all, clone the repo
+**Requirements:** [eyeD3](https://github.com/nicfit/eyeD3)
+
+First of all, clone the repo
 ```
 git clone https://github.com/marioexplo/ctag.git
 ```
-Then (in the repo) make *ctag.sh*
+Then (in the repo) make *ctag.sh* executable
 ```
 chmod +x ctag.sh
 ```
-Now you can choose to copy ctag.sh in folder for commands like `/usr/local/bin`, which will make CTag available for all user of your machine,
+Now you can choose to copy ctag.sh in a folder for commands like `/usr/local/bin`, which will make CTag available for all user of your machine,
 ```
 sudo cp ctag.sh /usr/local/bin
 ```
