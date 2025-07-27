@@ -9,14 +9,16 @@ if [ -f "$HOME/.config/ctag" ]; then
     IFS=',' read -ra exclude <<< "$(sed "1{p;q}" "$HOME/.config/ctag")"; else
     echo " " > "$HOME/.config/ctag"
 fi
-while getopts ":he:ad:" opt; do
+while getopts ":he:ad:E:" opt; do
     case $opt in
         h)
             echo "A small CLI interface for Bash to see the tag of all the files in a directory, in particular the artist tag in mp3 files."
             echo "Usage: ctag [OPTIONS] DIRECTORY"
-            echo "  -h                          Print this"
             echo "  -e FORMAT,FORMAT...         Exclude file formats"
-            echo "  -a                          All: paste untagged files, too"
+            echo "  -E FORMAT,FORMAT...         Exclude just these formats: default exclusion is ignored"
+            echo "  -a                          All: paste untagged files, too. Excluded files are still excluded"
+            echo "Usage: ctag [OPTION]"
+            echo "  -h                          Print this"
             echo "  -d MODE FORMAT,FORMAT...    Default formats to be always exluded"
             echo "                              MODE can be SET, ADD or SUB"
             echo "                              Use without DIRECTORY or other flags"
@@ -66,6 +68,9 @@ while getopts ":he:ad:" opt; do
             sed -i "1s/.*/${returner}/" "$HOME/.config/ctag"
             echo "Default exluded: $returner"
             exit 0
+            ;;
+        E)
+            IFS=',' read -ra exclude <<< "$OPTARG"
             ;;
         \?)
             echo 'Option not found'
