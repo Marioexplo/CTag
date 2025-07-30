@@ -94,7 +94,7 @@ for file in "${!#}"/*; do
     if [ -f "$file" ]; then
         name=$(basename "$file")
         if [ "${#exclude[@]}" -eq 0 ] || ! printf '%s\n' "${exclude[@]}" | grep -Fxq "${name##*.}"; then
-            artist=$(eyeD3 "$file" | grep artist)
+            artist=$(eyeD3 --no-color "$file" | grep artist)
             if [ -n "$artist" ] || [ -n "$all" ]; then
                 ((n+=1))
                 names[n]="$name"
