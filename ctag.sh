@@ -87,8 +87,8 @@ if [[ ! -d $1 ]]; then
   echo "$1: invalid directory"
   exit 1
 fi
-names=(Name)
-artists=(Artist)
+names=$(echo -e "\033[32mName\033[0m")
+artists=$(echo -e "\033[32mArtist\033[0m")
 n=0
 for file in "${!#}"/*; do 
     if [ -f "$file" ]; then
