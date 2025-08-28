@@ -57,7 +57,7 @@ while getopts ":he:ad:E:" opt; do
                         fi
                     done
                     ;;
-                \?)
+                *)
                     echo "Unknown MODE $OPTARG"
                     exit 1
                     ;;
@@ -72,7 +72,7 @@ while getopts ":he:ad:E:" opt; do
         E)
             IFS=',' read -ra exclude <<< "$OPTARG"
             ;;
-        \?)
+        *)
             echo 'Option not found'
             exit 1
             ;;
