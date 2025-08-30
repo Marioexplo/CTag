@@ -12,7 +12,7 @@ fi
 while getopts ":he:ad:E:" opt; do
     case $opt in
         h)
-            echo "A small CLI interface for Bash to see the tag of all the files in a directory, in particular the artist tag in mp3 files."
+            echo "A small CLI interface to see the tags of all the files in a directory, in particular the artist tag in mp3 files."
             echo "Usage: ctag [OPTIONS] DIRECTORY"
             echo "  -e FORMAT,FORMAT...         Exclude file formats"
             echo "  -E FORMAT,FORMAT...         Exclude just these formats: default exclusion is ignored"
@@ -103,4 +103,8 @@ for file in "${!#}"/*; do
         fi
     fi
 done
-paste <(printf "%s\n" "${names[@]}") <(printf "%s\n" "${artists[@]}") | column -t
+lines="${names[0]} ${artists[0]}"
+for ((i=1;i<${#names[@]};i++)); do
+    lines=$(echo -e "$lines\n $(echo "${names[i]}" | tr ' ' '-') $(echo "${artists[i]}" | tr ' ' '-')")
+done
+column -t <<< "$lines"
